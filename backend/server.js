@@ -3,12 +3,14 @@ const cors = require('cors');
 require('dotenv').config();
 const profileRoutes = require('./routes/profile');
 const roadmapRoutes = require('./routes/roadmap');
+const calculatorRoutes = require('./routes/calculator');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api/profile', profileRoutes);
 app.use('/api/roadmap', roadmapRoutes);
+app.use('/api/calculator', calculatorRoutes);
 
 const authRoutes = require('./routes/auth');
 

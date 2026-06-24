@@ -62,12 +62,20 @@ function Dashboard() {
           </p>
         )}
 
+        <div className="flex gap-3">
         <button
           onClick={() => navigate("/roadmap")}
           className="bg-amber text-charcoal px-4 py-2 rounded font-medium hover:opacity-90 transition"
         >
           View My Roadmap
         </button>
+        <button
+          onClick={() => navigate("/calculator")}
+          className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
+        >
+          Cost & Timeline
+        </button>
+      </div>
       </div>
     </div>
   );

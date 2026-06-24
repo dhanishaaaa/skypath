@@ -48,15 +48,15 @@ model Profile {
 }
 
 model RoadmapStep {
-  id           String   @id @default(uuid())
-  route        Route
-  stepOrder    Int
-  title        String
-  description  String
-  estCostLakhs Float?
-  estDuration  String?
-
-  progress     Progress[]
+  id              String   @id @default(uuid())
+  route           Route
+  stepOrder       Int
+  title           String
+  description     String
+  estCostLakhs    Float?
+  estDuration     String?
+  estDurationMonths Float?
+  progress        Progress[]
 }
 
 model Progress {

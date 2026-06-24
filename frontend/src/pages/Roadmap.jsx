@@ -36,7 +36,13 @@ function Roadmap() {
     }
   };
 
-  if (loading) return null;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-charcoal flex items-center justify-center">
+        <p className="text-cloud/50 font-mono text-sm">Loading your roadmap...</p>
+      </div>
+    );
+  }
 
   const completedCount = steps.filter((s) => s.progress?.[0]?.completed).length;
 
