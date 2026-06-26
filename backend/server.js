@@ -5,6 +5,7 @@ const profileRoutes = require('./routes/profile');
 const roadmapRoutes = require('./routes/roadmap');
 const calculatorRoutes = require('./routes/calculator');
 const schoolRoutes = require('./routes/schools');
+const quizRoutes = require('./routes/quiz');
 
 const app = express();
 app.use(cors());
@@ -13,6 +14,7 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/roadmap', roadmapRoutes);
 app.use('/api/calculator', calculatorRoutes);
 app.use('/api/schools', schoolRoutes);
+app.use('/api/quiz', quizRoutes);
 
 const authRoutes = require('./routes/auth');
 

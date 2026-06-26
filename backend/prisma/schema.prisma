@@ -20,6 +20,7 @@ model User {
   password  String
   createdAt DateTime @default(now())
   profile Profile?
+  quizAttempts QuizAttempt[]
 }
 
 enum Route {
@@ -82,4 +83,27 @@ model FlyingSchool {
   feeMaxLakhs Float
   fleetType   String
   website     String?
+}
+
+model QuizQuestion {
+  id            String  @id @default(uuid())
+  topic         String
+  question      String
+  optionA       String
+  optionB       String
+  optionC       String
+  optionD       String
+  correctOption String
+  explanation   String?
+}
+
+model QuizAttempt {
+  id             String   @id @default(uuid())
+  userId         String
+  topic          String
+  score          Int
+  totalQuestions Int
+  takenAt        DateTime @default(now())
+
+  user           User     @relation(fields: [userId], references: [id])
 }

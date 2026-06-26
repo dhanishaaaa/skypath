@@ -6,6 +6,9 @@ async function main() {
   await prisma.progress.deleteMany();
   await prisma.roadmapStep.deleteMany();
   await prisma.flyingSchool.deleteMany();
+  await prisma.quizAttempt.deleteMany();
+  await prisma.quizQuestion.deleteMany();
+
 
 const ndaSteps = [
   { route: 'NDA', stepOrder: 1, title: 'Complete 10th with Science', description: 'Take Physics, Chemistry, Math in 10th to keep this route open.', estCostLakhs: 0, estDuration: '1 year', estDurationMonths: 12 },
@@ -45,10 +48,27 @@ const flyingSchools = [
   { name: 'Chetak Aviation', city: 'Aligarh', state: 'Uttar Pradesh', ownership: 'Society', feeMinLakhs: 16, feeMaxLakhs: 20, fleetType: 'Cessna 172, Cessna 152' },
 ];
 
+const quizQuestions = [
+  { topic: 'General Aviation Knowledge', question: 'What is the international distress squawk code?', optionA: '7500', optionB: '7600', optionC: '7700', optionD: '7000', correctOption: 'C', explanation: '7700 is the universal emergency transponder code.' },
+  { topic: 'General Aviation Knowledge', question: 'Squawk code 7500 indicates:', optionA: 'Radio failure', optionB: 'Hijacking', optionC: 'Engine failure', optionD: 'Low fuel', correctOption: 'B', explanation: '7500 specifically signals unlawful interference/hijacking.' },
+  { topic: 'General Aviation Knowledge', question: 'Squawk code 7600 indicates:', optionA: 'Hijacking', optionB: 'Radio communication failure', optionC: 'Emergency', optionD: 'VFR flight', correctOption: 'B', explanation: '7600 signals loss of radio communication.' },
+  { topic: 'General Aviation Knowledge', question: 'What does ICAO stand for?', optionA: 'International Civil Aviation Organization', optionB: 'Indian Civil Aviation Office', optionC: 'International Cargo Aviation Operations', optionD: 'Inter-Continental Aviation Office', correctOption: 'A', explanation: 'ICAO sets global aviation standards under the UN.' },
+  { topic: 'General Aviation Knowledge', question: 'The standard ICAO VFR conspicuity transponder code (used in India) is:', optionA: '1200', optionB: '7000', optionC: '7700', optionD: '2000', correctOption: 'B', explanation: '7000 is the ICAO-standard VFR code; 1200 is US-specific.' },
+  { topic: 'General Aviation Knowledge', question: 'Minimum age to obtain a Student Pilot License (SPL) in India is:', optionA: '14', optionB: '16', optionC: '18', optionD: '21', correctOption: 'B', explanation: 'DGCA sets the minimum SPL age at 16 years.' },
+  { topic: 'General Aviation Knowledge', question: 'Minimum age to obtain a Commercial Pilot License (CPL) in India is:', optionA: '16', optionB: '17', optionC: '18', optionD: '21', correctOption: 'C', explanation: 'CPL requires a minimum age of 18 per DGCA rules.' },
+  { topic: 'General Aviation Knowledge', question: '"QNH" altimeter setting allows the altimeter to read:', optionA: 'Airfield elevation when on the ground', optionB: 'Height above ground only', optionC: 'Wind speed', optionD: 'Runway length', correctOption: 'A', explanation: 'QNH is set so the altimeter shows field elevation at touchdown.' },
+  { topic: 'General Aviation Knowledge', question: 'A distress call "Mayday" should be repeated how many times?', optionA: 'Once', optionB: 'Twice', optionC: 'Three times', optionD: 'Five times', correctOption: 'C', explanation: 'Standard radio procedure: "Mayday, Mayday, Mayday."' },
+  { topic: 'General Aviation Knowledge', question: 'A "PAN-PAN" radio call indicates:', optionA: 'Distress', optionB: 'Urgency, not immediate danger', optionC: 'All clear', optionD: 'Routine traffic', correctOption: 'B', explanation: 'PAN-PAN signals urgency below the severity of Mayday.' },
+  { topic: 'General Aviation Knowledge', question: 'When two aircraft converge at the same altitude, right of way generally goes to the aircraft on the:', optionA: 'Left', optionB: 'Right', optionC: 'Above', optionD: 'Below', correctOption: 'B', explanation: 'Standard rule of the air: yield to traffic on your right.' },
+  { topic: 'General Aviation Knowledge', question: 'DGCA stands for:', optionA: 'Directorate General of Civil Aviation', optionB: 'Department of Government Civil Airlines', optionC: 'Defense General Civil Aviation', optionD: 'Domestic General Civil Authority', correctOption: 'A', explanation: 'DGCA is India\'s civil aviation regulatory body.' },
+  { topic: 'General Aviation Knowledge', question: 'A Class 1 Medical Certificate in India is mandatory for:', optionA: 'Private Pilot License holders only', optionB: 'Commercial Pilot License holders', optionC: 'Cabin crew only', optionD: 'Air Traffic Controllers only', correctOption: 'B', explanation: 'CPL holders require the stricter Class 1 medical; PPL needs only Class 2.' },
+];
+
 await prisma.roadmapStep.createMany({ data: [...ndaSteps, ...civilianSteps] });
 await prisma.flyingSchool.createMany({ data: flyingSchools });
+await prisma.quizQuestion.createMany({ data: quizQuestions });
 
-console.log('Seed complete:', ndaSteps.length + civilianSteps.length, 'steps,', flyingSchools.length, 'schools');
+console.log('Seed complete:', ndaSteps.length + civilianSteps.length, 'steps,', flyingSchools.length, 'schools,', quizQuestions.length, 'questions');
 }
 
 main()

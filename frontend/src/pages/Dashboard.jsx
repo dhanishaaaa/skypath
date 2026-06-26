@@ -81,6 +81,18 @@ function Dashboard() {
         >
           Flying Schools
         </button>
+        <button
+          onClick={() => navigate("/quiz")}
+          className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
+        >
+          Take Quiz
+        </button>
+        <button
+          onClick={() => navigate("/quiz-history")}
+          className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
+        >
+          Quiz History
+        </button>
       </div>
       </div>
     </div>

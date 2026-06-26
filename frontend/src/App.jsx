@@ -6,6 +6,8 @@ import Onboarding from "./pages/Onboarding";
 import Roadmap from "./pages/Roadmap";
 import Calculator from "./pages/Calculator";
 import Schools from "./pages/Schools";
+import Quiz from "./pages/Quiz";
+import QuizHistory from "./pages/QuizHistory";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/calculator" element={<Calculator />} />
         <Route path="/schools" element={<Schools />} />
+        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/quiz-history" element={<QuizHistory />} />
       </Routes>
     </BrowserRouter>
   );
