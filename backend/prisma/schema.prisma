@@ -71,3 +71,15 @@ model Progress {
 
   @@unique([profileId, stepId])
 }
+
+model FlyingSchool {
+  id          String  @id @default(uuid())
+  name        String
+  city        String
+  state       String
+  ownership   String
+  feeMinLakhs Float
+  feeMaxLakhs Float
+  fleetType   String
+  website     String?
+}

@@ -75,6 +75,12 @@ function Dashboard() {
         >
           Cost & Timeline
         </button>
+        <button
+          onClick={() => navigate("/schools")}
+          className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
+        >
+          Flying Schools
+        </button>
       </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Onboarding from "./pages/Onboarding";
 import Roadmap from "./pages/Roadmap";
 import Calculator from "./pages/Calculator";
+import Schools from "./pages/Schools";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/calculator" element={<Calculator />} />
+        <Route path="/schools" element={<Schools />} />
       </Routes>
     </BrowserRouter>
   );

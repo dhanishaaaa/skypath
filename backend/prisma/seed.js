@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 async function main() {
   await prisma.progress.deleteMany();
   await prisma.roadmapStep.deleteMany();
+  await prisma.flyingSchool.deleteMany();
 
 const ndaSteps = [
   { route: 'NDA', stepOrder: 1, title: 'Complete 10th with Science', description: 'Take Physics, Chemistry, Math in 10th to keep this route open.', estCostLakhs: 0, estDuration: '1 year', estDurationMonths: 12 },
@@ -29,9 +30,25 @@ const civilianSteps = [
   { route: 'CIVILIAN', stepOrder: 10, title: 'Airline Interview & Placement', description: 'Apply to airlines, clear interview + simulator check, get hired as First Officer.', estCostLakhs: 0, estDuration: 'varies', estDurationMonths: 2 },
 ];
 
-  await prisma.roadmapStep.createMany({ data: [...ndaSteps, ...civilianSteps] });
+const flyingSchools = [
+  { name: 'Indira Gandhi Rashtriya Uran Akademi (IGRUA)', city: 'Amethi', state: 'Uttar Pradesh', ownership: 'Government', feeMinLakhs: 38, feeMaxLakhs: 42, fleetType: 'Cessna 172, Piper Seneca', website: 'www.igrua.gov.in' },
+  { name: 'The Bombay Flying Club', city: 'Mumbai', state: 'Maharashtra', ownership: 'Society', feeMinLakhs: 22, feeMaxLakhs: 26, fleetType: 'Cessna 172, Cessna 152, Piper Seneca', website: 'www.bombayflyingclub.com' },
+  { name: 'Madhya Pradesh Flying Club', city: 'Indore', state: 'Madhya Pradesh', ownership: 'State Government', feeMinLakhs: 18, feeMaxLakhs: 22, fleetType: 'Cessna 172' },
+  { name: 'National Flying Training Institute (NFTI)', city: 'Gondia', state: 'Maharashtra', ownership: 'Government (Alliance Air JV)', feeMinLakhs: 24, feeMaxLakhs: 28, fleetType: 'Cessna 172' },
+  { name: 'Rajiv Gandhi Academy for Aviation Technology (RGAAT)', city: 'Hyderabad', state: 'Telangana', ownership: 'Private Ltd', feeMinLakhs: 22, feeMaxLakhs: 26, fleetType: 'Cessna 152, Cessna 172' },
+  { name: 'Wings Aviation Pvt. Ltd.', city: 'Hyderabad', state: 'Telangana', ownership: 'Private Ltd', feeMinLakhs: 20, feeMaxLakhs: 24, fleetType: 'Cessna 152, Cessna 172, Technam P2006T' },
+  { name: 'Academy of Carver Aviation', city: 'Baramati', state: 'Maharashtra', ownership: 'Private Ltd', feeMinLakhs: 20, feeMaxLakhs: 24, fleetType: 'Cessna 172' },
+  { name: 'Ambitions Flying Club', city: 'Karad', state: 'Maharashtra', ownership: 'Private Ltd', feeMinLakhs: 20, feeMaxLakhs: 24, fleetType: 'Cessna 172' },
+  { name: 'Government Aviation Training Institute', city: 'Bhopal', state: 'Madhya Pradesh', ownership: 'State Government', feeMinLakhs: 16, feeMaxLakhs: 20, fleetType: 'Cessna 172' },
+  { name: 'Asia Pacific Flight Training Academy', city: 'Jalgaon', state: 'Maharashtra', ownership: 'Private Ltd', feeMinLakhs: 26, feeMaxLakhs: 30, fleetType: 'Diamond DA40, DA42' },
+  { name: 'Vision Flying Training Institute', city: 'Amreli', state: 'Gujarat', ownership: 'Private Ltd', feeMinLakhs: 22, feeMaxLakhs: 26, fleetType: 'Cessna 172' },
+  { name: 'Chetak Aviation', city: 'Aligarh', state: 'Uttar Pradesh', ownership: 'Society', feeMinLakhs: 16, feeMaxLakhs: 20, fleetType: 'Cessna 172, Cessna 152' },
+];
 
-  console.log('Seed complete:', ndaSteps.length + civilianSteps.length, 'steps created');
+await prisma.roadmapStep.createMany({ data: [...ndaSteps, ...civilianSteps] });
+await prisma.flyingSchool.createMany({ data: flyingSchools });
+
+console.log('Seed complete:', ndaSteps.length + civilianSteps.length, 'steps,', flyingSchools.length, 'schools');
 }
 
 main()
