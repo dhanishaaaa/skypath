@@ -4,13 +4,15 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [vector]
 }
 
 model User {
@@ -106,4 +108,11 @@ model QuizAttempt {
   takenAt        DateTime @default(now())
 
   user           User     @relation(fields: [userId], references: [id])
+}
+
+model KnowledgeChunk {
+  id        String                       @id @default(uuid())
+  topic     String
+  content   String
+  embedding Unsupported("vector(768)")?
 }
