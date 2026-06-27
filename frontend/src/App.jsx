@@ -8,6 +8,7 @@ import Calculator from "./pages/Calculator";
 import Schools from "./pages/Schools";
 import Quiz from "./pages/Quiz";
 import QuizHistory from "./pages/QuizHistory";
+import Chat from "./pages/Chat";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/schools" element={<Schools />} />
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/quiz-history" element={<QuizHistory />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </BrowserRouter>
   );

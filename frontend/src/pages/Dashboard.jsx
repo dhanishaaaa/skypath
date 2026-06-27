@@ -93,6 +93,12 @@ function Dashboard() {
         >
           Quiz History
         </button>
+        <button
+          onClick={() => navigate("/chat")}
+          className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
+        >
+          Ask Assistant
+        </button>
       </div>
       </div>
     </div>
