@@ -20,6 +20,10 @@ function Onboarding() {
   const [currentStage, setCurrentStage] = useState("");
   const [chosenRoute, setChosenRoute] = useState("");
   const [budgetLakhs, setBudgetLakhs] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [colorBlind, setColorBlind] = useState(false);
+  const [visionIssues, setVisionIssues] = useState(false);
+  const [bpIssues, setBpIssues] = useState(false);
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
@@ -30,6 +34,10 @@ function Onboarding() {
         currentStage,
         chosenRoute,
         budgetLakhs: budgetLakhs ? Number(budgetLakhs) : null,
+        dateOfBirth: dateOfBirth || null,
+        colorBlind,
+        visionIssues,
+        bpIssues,
       });
       navigate("/dashboard");
     } catch (err) {
@@ -77,8 +85,49 @@ function Onboarding() {
           value={budgetLakhs}
           onChange={(e) => setBudgetLakhs(e.target.value)}
           placeholder="e.g. 30"
-          className="w-full mb-6 px-3 py-2 rounded bg-charcoal border border-white/10 outline-none focus:border-amber"
+          className="w-full mb-4 px-3 py-2 rounded bg-charcoal border border-white/10 outline-none focus:border-amber"
         />
+
+        <label className="text-sm text-cloud/70 mb-1 block">Date of birth (optional, for NDA age check)</label>
+        <input
+          type="date"
+          value={dateOfBirth}
+          onChange={(e) => setDateOfBirth(e.target.value)}
+          className="w-full mb-4 px-3 py-2 rounded bg-charcoal border border-white/10 outline-none focus:border-amber"
+        />
+
+        <p className="text-sm text-cloud/70 mb-2">Any of these apply to you? (optional)</p>
+        <p className="text-xs text-cloud/40 mb-3">
+          Used only to flag potential medical eligibility issues — not shared anywhere.
+        </p>
+
+        <label className="flex items-center gap-2 mb-2 text-sm text-cloud/80">
+          <input
+            type="checkbox"
+            checked={colorBlind}
+            onChange={(e) => setColorBlind(e.target.checked)}
+            className="accent-amber"
+          />
+          Color blindness
+        </label>
+        <label className="flex items-center gap-2 mb-2 text-sm text-cloud/80">
+          <input
+            type="checkbox"
+            checked={visionIssues}
+            onChange={(e) => setVisionIssues(e.target.checked)}
+            className="accent-amber"
+          />
+          Vision issues (beyond standard correctable myopia)
+        </label>
+        <label className="flex items-center gap-2 mb-6 text-sm text-cloud/80">
+          <input
+            type="checkbox"
+            checked={bpIssues}
+            onChange={(e) => setBpIssues(e.target.checked)}
+            className="accent-amber"
+          />
+          Blood pressure issues
+        </label>
 
         <button type="submit" className="w-full bg-amber text-charcoal font-medium py-2 rounded hover:opacity-90 transition">
           Continue

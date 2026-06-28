@@ -6,12 +6,30 @@ const router = express.Router();
 
 router.post('/', verifyToken, async (req, res) => {
   try {
-    const { currentStage, chosenRoute, budgetLakhs } = req.body;
+    const {
+      currentStage,
+      chosenRoute,
+      budgetLakhs,
+      dateOfBirth,
+      colorBlind,
+      visionIssues,
+      bpIssues,
+    } = req.body;
+
+    const data = {
+      currentStage,
+      chosenRoute,
+      budgetLakhs,
+      dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
+      colorBlind: !!colorBlind,
+      visionIssues: !!visionIssues,
+      bpIssues: !!bpIssues,
+    };
 
     const profile = await prisma.profile.upsert({
       where: { userId: req.userId },
-      update: { currentStage, chosenRoute, budgetLakhs },
-      create: { userId: req.userId, currentStage, chosenRoute, budgetLakhs },
+      update: data,
+      create: { userId: req.userId, ...data },
     });
 
     res.json({ profile });

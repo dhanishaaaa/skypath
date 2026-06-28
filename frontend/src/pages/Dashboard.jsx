@@ -6,6 +6,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [roadmapSummary, setRoadmapSummary] = useState(null);
+  const [eligibility, setEligibility] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -22,6 +23,13 @@ function Dashboard() {
           setRoadmapSummary({ total, done, route: roadmapRes.data.route });
         } catch (err) {
           setRoadmapSummary(null);
+        }
+
+        try {
+          const eligRes = await api.get("/eligibility");
+          setEligibility(eligRes.data);
+        } catch (err) {
+          setEligibility(null);
         }
       } catch (err) {
         localStorage.removeItem("token");
@@ -62,44 +70,58 @@ function Dashboard() {
           </p>
         )}
 
+        {eligibility?.nda?.monthsRemaining !== null && eligibility?.nda?.eligible && (
+          <div className="bg-amber/10 border border-amber/30 rounded p-3 mb-4">
+            <p className="text-amber text-sm font-mono">
+              ⏳ {eligibility.nda.monthsRemaining} months left in your NDA eligibility window
+            </p>
+          </div>
+        )}
+
+        {eligibility?.routeWarning && (
+          <div className="bg-alert/10 border border-alert/30 rounded p-3 mb-4">
+            <p className="text-alert text-sm">⚠ {eligibility.routeWarning}</p>
+          </div>
+        )}
+
         <div className="flex gap-3">
-        <button
-          onClick={() => navigate("/roadmap")}
-          className="bg-amber text-charcoal px-4 py-2 rounded font-medium hover:opacity-90 transition"
-        >
-          View My Roadmap
-        </button>
-        <button
-          onClick={() => navigate("/calculator")}
-          className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
-        >
-          Cost & Timeline
-        </button>
-        <button
-          onClick={() => navigate("/schools")}
-          className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
-        >
-          Flying Schools
-        </button>
-        <button
-          onClick={() => navigate("/quiz")}
-          className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
-        >
-          Take Quiz
-        </button>
-        <button
-          onClick={() => navigate("/quiz-history")}
-          className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
-        >
-          Quiz History
-        </button>
-        <button
-          onClick={() => navigate("/chat")}
-          className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
-        >
-          Ask Assistant
-        </button>
-      </div>
+          <button
+            onClick={() => navigate("/roadmap")}
+            className="bg-amber text-charcoal px-4 py-2 rounded font-medium hover:opacity-90 transition"
+          >
+            View My Roadmap
+          </button>
+          <button
+            onClick={() => navigate("/calculator")}
+            className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
+          >
+            Cost & Timeline
+          </button>
+          <button
+            onClick={() => navigate("/schools")}
+            className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
+          >
+            Flying Schools
+          </button>
+          <button
+            onClick={() => navigate("/quiz")}
+            className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
+          >
+            Take Quiz
+          </button>
+          <button
+            onClick={() => navigate("/quiz-history")}
+            className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
+          >
+            Quiz History
+          </button>
+          <button
+            onClick={() => navigate("/chat")}
+            className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
+          >
+            Ask Assistant
+          </button>
+        </div>
       </div>
     </div>
   );
