@@ -44,6 +44,21 @@ function Dashboard() {
     navigate("/");
   };
 
+  const downloadReport = async () => {
+    try {
+      const res = await api.get("/report/pdf", { responseType: "blob" });
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "SkyPath_Roadmap.pdf");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   if (!user) return null;
 
   return (
@@ -84,7 +99,7 @@ function Dashboard() {
           </div>
         )}
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap">
           <button
             onClick={() => navigate("/roadmap")}
             className="bg-amber text-charcoal px-4 py-2 rounded font-medium hover:opacity-90 transition"
@@ -120,6 +135,12 @@ function Dashboard() {
             className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
           >
             Ask Assistant
+          </button>
+          <button
+            onClick={downloadReport}
+            className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
+          >
+            Download PDF
           </button>
         </div>
       </div>
