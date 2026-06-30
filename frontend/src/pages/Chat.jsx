@@ -9,17 +9,39 @@ const suggestedQuestions = [
   "NDA vs civilian — which is better?",
 ];
 
+const welcomeMessage = { role: "assistant", text: "Hi! Ask me anything about becoming a pilot in India — roadmap steps, costs, NDA vs civilian, flying schools, or exam basics.", sources: [] };
+
 function Chat() {
   const navigate = useNavigate();
-  const [messages, setMessages] = useState([
-    { role: "assistant", text: "Hi! Ask me anything about becoming a pilot in India — roadmap steps, costs, NDA vs civilian, flying schools, or exam basics.", sources: [] },
-  ]);
+  const [messages, setMessages] = useState([welcomeMessage]);
+  const [historyLoaded, setHistoryLoaded] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
   const askSuggested = (question) => {
     setInput(question);
   };
+
+  useEffect(() => {
+    const loadHistory = async () => {
+      try {
+        const res = await api.get("/chat/history");
+        if (res.data.messages.length > 0) {
+          const loaded = res.data.messages.map((m) => ({
+            role: m.role,
+            text: m.content,
+            sources: m.sources || [],
+          }));
+          setMessages([welcomeMessage, ...loaded]);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setHistoryLoaded(true);
+      }
+    };
+    loadHistory();
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -61,7 +83,14 @@ function Chat() {
         <h1 className="text-xl font-semibold">Aviation Knowledge Assistant</h1>
         <div className="flex gap-4">
           <button
-            onClick={() => setMessages([messages[0]])}
+            onClick={async () => {
+              try {
+                await api.delete("/chat/history");
+              } catch (err) {
+                console.error(err);
+              }
+              setMessages([welcomeMessage]);
+            }}
             className="text-sm text-cloud/60 hover:text-alert transition"
           >
             Clear Chat
@@ -93,7 +122,7 @@ function Chat() {
           </div>
         )}
 
-        {messages.length === 1 && (
+        {historyLoaded && messages.length === 1 && (
           <div className="flex flex-wrap gap-2 pt-2">
             {suggestedQuestions.map((q, i) => (
               <button
