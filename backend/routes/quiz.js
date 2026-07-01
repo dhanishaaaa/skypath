@@ -43,6 +43,7 @@ router.post('/submit', verifyToken, async (req, res) => {
       return {
         questionId: a.questionId,
         question: q?.question,
+        topic: q?.topic,
         yourAnswer: a.selectedOption,
         correctOption: q?.correctOption,
         isCorrect,
@@ -50,12 +51,18 @@ router.post('/submit', verifyToken, async (req, res) => {
       };
     });
 
-    await prisma.quizAttempt.create({
+    const attempt = await prisma.quizAttempt.create({
       data: {
         userId: req.userId,
-        topic: questions[0]?.topic || 'General Aviation Knowledge',
+        topic: 'Mixed',
         score,
         totalQuestions: answers.length,
+        answers: {
+          create: results.map((r) => ({
+            topic: r.topic || 'Unknown',
+            isCorrect: r.isCorrect,
+          })),
+        },
       },
     });
 
@@ -74,6 +81,32 @@ router.get('/history', verifyToken, async (req, res) => {
     res.json({ attempts });
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch history' });
+  }
+});
+
+router.get('/weak-topics', verifyToken, async (req, res) => {
+  try {
+    const answers = await prisma.attemptAnswer.findMany({
+      where: { attempt: { userId: req.userId } },
+    });
+
+    const topicStats = {};
+    answers.forEach((a) => {
+      if (!topicStats[a.topic]) topicStats[a.topic] = { correct: 0, total: 0 };
+      topicStats[a.topic].total++;
+      if (a.isCorrect) topicStats[a.topic].correct++;
+    });
+
+    const breakdown = Object.entries(topicStats).map(([topic, stats]) => ({
+      topic,
+      correct: stats.correct,
+      total: stats.total,
+      accuracy: Math.round((stats.correct / stats.total) * 100),
+    })).sort((a, b) => a.accuracy - b.accuracy);
+
+    res.json({ breakdown });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch weak topics' });
   }
 });
 

@@ -24,6 +24,7 @@ model User {
   profile Profile?
   quizAttempts QuizAttempt[]
   chatMessages ChatMessage[]
+  bookmarks SchoolBookmark[]
 }
 
 enum Route {
@@ -90,6 +91,7 @@ model FlyingSchool {
   feeMaxLakhs Float
   fleetType   String
   website     String?
+  bookmarks SchoolBookmark[]
 }
 
 model QuizQuestion {
@@ -104,6 +106,7 @@ model QuizQuestion {
   explanation   String?
 }
 
+
 model QuizAttempt {
   id             String   @id @default(uuid())
   userId         String
@@ -112,7 +115,8 @@ model QuizAttempt {
   totalQuestions Int
   takenAt        DateTime @default(now())
 
-  user           User     @relation(fields: [userId], references: [id])
+  user           User           @relation(fields: [userId], references: [id])
+  answers        AttemptAnswer[]
 }
 
 model KnowledgeChunk {
@@ -131,4 +135,25 @@ model ChatMessage {
   createdAt DateTime @default(now())
 
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model AttemptAnswer {
+  id         String   @id @default(uuid())
+  attemptId  String
+  topic      String
+  isCorrect  Boolean
+
+  attempt    QuizAttempt @relation(fields: [attemptId], references: [id])
+}
+
+model SchoolBookmark {
+  id        String   @id @default(uuid())
+  userId    String
+  schoolId  String
+  createdAt DateTime @default(now())
+
+  user      User         @relation(fields: [userId], references: [id])
+  school    FlyingSchool @relation(fields: [schoolId], references: [id])
+
+  @@unique([userId, schoolId])
 }
