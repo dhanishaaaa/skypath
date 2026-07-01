@@ -142,6 +142,12 @@ function Dashboard() {
           >
             Download PDF
           </button>
+          <button
+            onClick={() => navigate("/readiness")}
+            className="bg-steel border border-amber text-amber px-4 py-2 rounded font-medium hover:bg-amber/10 transition"
+          >
+            Readiness Score
+          </button>
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import Schools from "./pages/Schools";
 import Quiz from "./pages/Quiz";
 import QuizHistory from "./pages/QuizHistory";
 import Chat from "./pages/Chat";
+import Readiness from "./pages/Readiness";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/quiz-history" element={<QuizHistory />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/readiness" element={<Readiness />} />
       </Routes>
     </BrowserRouter>
   );

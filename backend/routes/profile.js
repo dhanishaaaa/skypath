@@ -8,6 +8,8 @@ router.post('/', verifyToken, async (req, res) => {
   try {
     const {
       currentStage,
+      stream,
+      pcmPercent,
       chosenRoute,
       budgetLakhs,
       dateOfBirth,
@@ -18,8 +20,10 @@ router.post('/', verifyToken, async (req, res) => {
 
     const data = {
       currentStage,
+      stream: stream || 'OTHER',
+      pcmPercent: pcmPercent ? Number(pcmPercent) : null,
       chosenRoute,
-      budgetLakhs,
+      budgetLakhs: budgetLakhs ? Number(budgetLakhs) : null,
       dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
       colorBlind: !!colorBlind,
       visionIssues: !!visionIssues,

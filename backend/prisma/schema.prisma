@@ -34,16 +34,30 @@ enum Route {
 }
 
 enum Stage {
-  TENTH
-  TWELFTH
-  AFTER_TWELFTH
-  AFTER_GRADUATION
+  IN_TENTH
+  IN_TWELFTH
+  COMPLETED_TWELFTH
+  IN_BACHELOR
+  COMPLETED_BACHELOR
+  IN_MASTER
+  COMPLETED_MASTER
+  WORKING_PROFESSIONAL
+}
+
+enum Stream {
+  SCIENCE_PCM
+  SCIENCE_PCB
+  COMMERCE
+  ARTS
+  OTHER
 }
 
 model Profile {
   id            String    @id @default(uuid())
   userId        String    @unique
   currentStage  Stage
+  stream        Stream    @default(OTHER)
+  pcmPercent    Float?
   chosenRoute   Route     @default(UNDECIDED)
   budgetLakhs   Int?
   dateOfBirth   DateTime?
@@ -55,7 +69,6 @@ model Profile {
   user          User      @relation(fields: [userId], references: [id])
   progress      Progress[]
 }
-
 model RoadmapStep {
   id              String   @id @default(uuid())
   route           Route

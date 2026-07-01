@@ -11,6 +11,7 @@ const chatRoutes = require('./routes/chat');
 const eligibilityRoutes = require('./routes/eligibility');
 const reportRoutes = require('./routes/report');
 const bookmarkRoutes = require('./routes/bookmarks');
+const readinessRoutes = require('./routes/readiness');
 
 const app = express();
 app.use(cors());
@@ -25,6 +26,7 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/eligibility', eligibilityRoutes);
 app.use('/api/report', reportRoutes);
 app.use('/api/bookmarks', bookmarkRoutes);
+app.use('/api/readiness', readinessRoutes);
 
 const authRoutes = require('./routes/auth');
 
